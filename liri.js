@@ -24,7 +24,7 @@ switch (command){
         infoMovie(command2);
         break;
     case "do-what-it-says":
-
+        infoDone(command2)
         break;
 
 }
@@ -67,17 +67,17 @@ function infoSong(song){
 
 
 function infoMovie(movie) {
-/*   if (movie === "") {
-    movie = "Mr Nobody"
-    console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/" +"\nIt's on Netflix!");
-    return
-  } */
+
 
 // Make a request for a user with a given ID
 axios.get("http://www.omdbapi.com/?apikey=8730e0e&t=" + movie)
 
 .then(function (response) {
-
+  if (movie === undefined) {
+     movie = "Mr. Nobody";
+    console.log("If you haven't watched 'Mr. Nobody,' then you should: http://www.imdb.com/title/tt0485947/" +"\nIt's on Netflix!");
+  }
+  else {
     // handle success
     console.log("Title of the movie: ", response.data.Title)
     console.log("Year the movie came out: ", response.data.Year)
@@ -87,7 +87,7 @@ axios.get("http://www.omdbapi.com/?apikey=8730e0e&t=" + movie)
     console.log("Language of the movie: ", response.data.Language)
     console.log("Plot of the movie: ", response.data.Plot)
     console.log("Actors in the movie: ", response.data.Actors)
-
+  }
   })
   .catch(function (error) {
     // handle error
@@ -96,4 +96,20 @@ axios.get("http://www.omdbapi.com/?apikey=8730e0e&t=" + movie)
   .finally(function () {
     // always executed
   }); 
+}
+
+function infoDone(done){
+  fs.readFile('random.txt','utf8', function(err, data) {
+
+    data = data.split(",");
+    var star = data[0];
+    var star2 = data[1];
+
+    switch (star){
+      case "spotify-this-song":
+          infoSong(star2);
+          break;
+  }
+  });
+
 }
